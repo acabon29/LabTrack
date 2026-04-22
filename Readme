@@ -1,0 +1,120 @@
+
+=> creer le back =
+dotnet new webapi -n LabTrack.Api
+
+
+
+
+dotnet run --project LabTrack.Api
+ => lancer le back
+ ???? dotnet watch run
+
+
+
+
+cd /mnt/d/projets/entretient/LabTrack/frontend
+npm install
+npm run dev
+ => lancer le front
+
+
+ dotnet new webapi -n LabTrack.Api
+ => c quoi ?
+
+
+=> SQLite + Entity Framework =
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.Design
+c quoi entity frqmework
+
+Dans Sample c'est quoi reference ?
+
+c quoi dans appsetting.json=
+"ConnectionStrings": {
+    "DefaultConnection": "Data Source=labtrack.db"
+  },
+
+
+
+c'est quoi tout ca =
+
+using LabTrack.Api.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+
+
+
+
+
+
+Installer l'outil de migration :
+dotnet tool install --global dotnet-ef
+
+pour verrifier :
+dotnet ef
+
+Puis :
+dotnet ef migrations add InitialCreate
+ => analyser les Models (Sample, etc.)
+ => creer un dossier Migrations/
+ => générer les scripts SQL
+dotnet ef database update
+ => creer le fichier SQLite (labtrack.db)
+ => creer les tables
+
+a chqaue chqngement de models :
+dotnet ef migrations add NomDuChangement
+dotnet ef database update
+
+
+
+
+
+
+
+
+
+launchSettings.json => configuration du lancement de l'app en local
+
+
+appsettings.Development.json => settings en mode dev
+=> override des configs
+=> mettre des valeurs locales
+
+LabTrack.Api.csproj => coeur du projet
+
+LabTrack.Api.http => outil pour tester un projet
+=> grqace a swagger => verrifier ce que c'est 
+
+
+Ajouter un Middleware pour centraliser les trow + potentiellemtne verrification de tockens pour identification/bloquer connexion ?
+
+Pourquoi il y q des awqit partout ?
+
+
+verrifier les modifications

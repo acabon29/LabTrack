@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/sgoinfre/goinfre/Perso/acabon/LabTrack/backend/LabTrack.Api/LabTrack.Api.csproj": {}
+    "/mnt/d/projets/entretient/LabTrack/LabTrack.Api/LabTrack.Api.csproj": {}
   },
   "projects": {
-    "/sgoinfre/goinfre/Perso/acabon/LabTrack/backend/LabTrack.Api/LabTrack.Api.csproj": {
+    "/mnt/d/projets/entretient/LabTrack/LabTrack.Api/LabTrack.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/sgoinfre/goinfre/Perso/acabon/LabTrack/backend/LabTrack.Api/LabTrack.Api.csproj",
+        "projectUniqueName": "/mnt/d/projets/entretient/LabTrack/LabTrack.Api/LabTrack.Api.csproj",
         "projectName": "LabTrack.Api",
-        "projectPath": "/sgoinfre/goinfre/Perso/acabon/LabTrack/backend/LabTrack.Api/LabTrack.Api.csproj",
+        "projectPath": "/mnt/d/projets/entretient/LabTrack/LabTrack.Api/LabTrack.Api.csproj",
         "packagesPath": "/home/acabon/.nuget/packages/",
-        "outputPath": "/sgoinfre/goinfre/Perso/acabon/LabTrack/backend/LabTrack.Api/obj/",
+        "outputPath": "/mnt/d/projets/entretient/LabTrack/LabTrack.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/acabon/.nuget/NuGet/NuGet.Config"
@@ -38,13 +38,23 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[9.0.4, )"
             }
@@ -68,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/acabon/.dotnet/sdk/9.0.313/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
