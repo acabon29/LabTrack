@@ -7,7 +7,8 @@ dotnet new webapi -n LabTrack.Api
 
 dotnet run --project LabTrack.Api
  => lancer le back
- ???? dotnet watch run
+dotnet watch run
+ => relance automatiquement en cas de modification
 
 
 
@@ -18,57 +19,11 @@ npm run dev
  => lancer le front
 
 
- dotnet new webapi -n LabTrack.Api
- => c quoi ?
 
 
 => SQLite + Entity Framework =
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
-c quoi entity frqmework
-
-Dans Sample c'est quoi reference ?
-
-c quoi dans appsetting.json=
-"ConnectionStrings": {
-    "DefaultConnection": "Data Source=labtrack.db"
-  },
-
-
-
-c'est quoi tout ca =
-
-using LabTrack.Api.Data;
-using Microsoft.EntityFrameworkCore;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
-
-
-
 
 
 

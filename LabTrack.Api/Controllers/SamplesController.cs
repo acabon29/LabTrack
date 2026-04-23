@@ -1,6 +1,7 @@
 using LabTrack.Api.Data;
 using LabTrack.Api.Dtos.Sample;
 using LabTrack.Api.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabTrack.Api.Controllers;
@@ -49,5 +50,23 @@ public class SamplesController : ControllerBase
         };
 
         return Ok(response);
+    }
+
+     // GET: api/samples
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var samples = await _context.Samples
+            .Select(sample => new SampleResponseDto
+            {
+                Id = sample.Id,
+                Reference = sample.Reference,
+                ClientName = sample.ClientName,
+                ReceivedAt = sample.ReceivedAt,
+                Status = sample.Status.ToString()
+            })
+            .ToListAsync();
+
+        return Ok(samples);
     }
 }

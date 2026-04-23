@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace LabTrack.Api.Dtos.Sample; // c'est quoi ca ?
+namespace LabTrack.Api.Dtos.Sample;
 
 public class CreateSampleDto
 {
