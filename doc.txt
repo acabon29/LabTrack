@@ -21,7 +21,8 @@ npm run dev
 
 
 
-=> SQLite + Entity Framework =
+Entity Framework Core = ORM(Mapping objet-relationnel)
+=> SQLite + Entity Framework Core =
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 
@@ -68,8 +69,3 @@ LabTrack.Api.http => outil pour tester un projet
 
 
 Ajouter un Middleware pour centraliser les trow + potentiellemtne verrification de tockens pour identification/bloquer connexion ?
-
-Pourquoi il y q des awqit partout ?
-
-
-verrifier les modifications

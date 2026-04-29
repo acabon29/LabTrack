@@ -3,114 +3,84 @@ using LabTrack.Api.Dtos.Sample;
 using LabTrack.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using LabTrack.Api.Services;
 
 namespace LabTrack.Api.Controllers;
 
 
-// comment ca fonctionne exactement ?
 [ApiController]
 [Route("api/[controller]")]
 public class SamplesController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly SampleService _sampleService;
 
-    public SamplesController(AppDbContext context)
+    public SamplesController(AppDbContext context, SampleService sampleService)
     {
         _context = context;
+        _sampleService = sampleService;
     }
 
-    // comment le programme sait que c'est api/samples ?
-    // Quand tu seras à l’aise, tu pourras :
-    // deplacer la logique dans un Service
-    // ajouter validation
-    // gérer les erreurs
-
-    // POST: api/samples
     [HttpPost]
     public async Task<IActionResult> CreateSample(CreateSampleDto dto)
     {
-        var sample = new Sample
-        {
-            Reference = dto.Reference,
-            ClientName = dto.ClientName,
-            ReceivedAt = DateTime.UtcNow,
-            Status = SampleStatus.Received
-        };
-
-        _context.Samples.Add(sample);
-        await _context.SaveChangesAsync();
-
-        var response = new SampleResponseDto
-        {
-            Id = sample.Id,
-            Reference = sample.Reference,
-            ClientName = sample.ClientName,
-            ReceivedAt = sample.ReceivedAt,
-            Status = sample.Status.ToString()
-        };
-
-        return Ok(response);
+        SampleResponseDto response = await _sampleService.CreateAsync(dto);
+        
+        return Ok(response); // CreatedAtAction ?
+        // return Created("", response);
+        // renvoie la réponse avec un lien vers la ressource :
+        // return CreatedAtAction(
+        //     nameof(GetSampleById), // fonction utilisé permettant de récupérer l'objet en question
+        //     new { id = response.Id },
+        //     response
+        // );
     }
 
-     // GET: api/samples
     [HttpGet]
     public async Task<IActionResult> GetAllSamples()
     {
-        var samples = await _context.Samples
-            .Select(sample => new SampleResponseDto
-            {
-                Id = sample.Id,
-                Reference = sample.Reference,
-                ClientName = sample.ClientName,
-                ReceivedAt = sample.ReceivedAt,
-                Status = sample.Status.ToString()
-            })
-            .ToListAsync();
-
+        var samples = await _sampleService.GetAllAsync();
         return Ok(samples);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateSample(int id, CreateSampleDto dto) // ne pas utiliser ce dto
-    {
+    // [HttpPut("{id}")]
+    // public async Task<IActionResult> UpdateSample(int id, CreateSampleDto dto) // ne pas utiliser ce dto
+    // {
 
-        var sample = await _context.Samples.FindAsync(id);
+    //     var sample = await _context.Samples.FindAsync(id);
 
-        if (sample == null)
-            return NotFound();
+    //     if (sample == null)
+    //         return NotFound();
 
 
-        var samples = await _context.Samples
-            .Select(sample => new SampleResponseDto
-            {
-                Id = sample.Id,
-                Reference = sample.Reference,
-                ClientName = sample.ClientName,
-                ReceivedAt = sample.ReceivedAt,
-                Status = sample.Status.ToString()
-            })
-            .ToListAsync();
+    //     var samples = await _context.Samples
+    //         .Select(sample => new SampleResponseDto
+    //         {
+    //             Id = sample.Id,
+    //             Reference = sample.Reference,
+    //             ClientName = sample.ClientName,
+    //             ReceivedAt = sample.ReceivedAt,
+    //             Status = sample.Status.ToString()
+    //         })
+    //         .ToListAsync();
 
         
-        _context.Samples.Update(sample);
-        await _context.SaveChangesAsync();
+    //     _context.Samples.Update(sample);
+    //     await _context.SaveChangesAsync();
 
 
-        return Ok(null);
-    }
+    //     return Ok(null);
+    // }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSample(int id)
     {
-        var sample = await _context.Samples.FindAsync(id);
+        bool isDelete = await _sampleService.DeleteAsync(id);
 
-        if (sample == null) // on peut fqire aussi "is null"
-            return NotFound();
+        if (isDelete)
+            return NoContent();
 
-        _context.Samples.Remove(sample);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        return NotFound();
     }
 
 
@@ -119,10 +89,10 @@ public class SamplesController : ControllerBase
     // faire cei fait la meme chose :
     // [HttpPost("api/test")]
     // ici : chmain absolut
-    [HttpPost("/api/test")]
-    public IActionResult test()
-    {
-        Console.WriteLine("gfsgfdsg test");
-        return Ok("test");
-    }
+    // [HttpPost("/api/test")]
+    // public IActionResult test()
+    // {
+    //     Console.WriteLine("gfsgfdsg test");
+    //     return Ok("test");
+    // }
 }

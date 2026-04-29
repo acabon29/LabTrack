@@ -5,7 +5,7 @@ namespace LabTrack.Api.Dtos.Sample;
 
 public class CreateSampleDto
 {
-    [Required] // a quoii sert le Required ? => comment ca fonctionne ?
+    [Required]
     public string Reference { get; set; } = "";
 
     [Required]

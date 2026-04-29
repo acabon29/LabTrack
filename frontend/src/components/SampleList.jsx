@@ -1,5 +1,5 @@
 
-const SampleList = ({ samples }) => {
+const SampleList = ({ samples, onDeleteSample }) => {
   return (
     <section className="panel">
       <div className="panel-header">
@@ -28,6 +28,13 @@ const SampleList = ({ samples }) => {
               <span className="sample-label">Status</span>
               <span className="status-pill">{sample.status}</span>
             </div>
+
+            <div className="sample-card-row sample-card-row-actions">
+              <button className="delete-button" type="button" onClick={() => onDeleteSample({ id: sample.id })}>
+                Supprimer
+              </button>
+            </div>
+
           </article>
         ))}
       </div>

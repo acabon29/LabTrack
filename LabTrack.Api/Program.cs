@@ -1,4 +1,5 @@
 using LabTrack.Api.Data;
+using LabTrack.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -25,6 +26,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<SampleService>();
 
 var app = builder.Build();
 
