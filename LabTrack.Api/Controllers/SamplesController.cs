@@ -19,11 +19,11 @@ public class SamplesController : ControllerBase
         _context = context;
     }
 
-// comment le programme sait que c'est api/samples ?
-// Quand tu seras à l’aise, tu pourras :
-// deplacer la logique dans un Service
-// ajouter validation
-// gérer les erreurs
+    // comment le programme sait que c'est api/samples ?
+    // Quand tu seras à l’aise, tu pourras :
+    // deplacer la logique dans un Service
+    // ajouter validation
+    // gérer les erreurs
 
     // POST: api/samples
     [HttpPost]
@@ -54,7 +54,7 @@ public class SamplesController : ControllerBase
 
      // GET: api/samples
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAllSamples()
     {
         var samples = await _context.Samples
             .Select(sample => new SampleResponseDto
@@ -68,5 +68,61 @@ public class SamplesController : ControllerBase
             .ToListAsync();
 
         return Ok(samples);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateSample(int id, CreateSampleDto dto) // ne pas utiliser ce dto
+    {
+
+        var sample = await _context.Samples.FindAsync(id);
+
+        if (sample == null)
+            return NotFound();
+
+
+        var samples = await _context.Samples
+            .Select(sample => new SampleResponseDto
+            {
+                Id = sample.Id,
+                Reference = sample.Reference,
+                ClientName = sample.ClientName,
+                ReceivedAt = sample.ReceivedAt,
+                Status = sample.Status.ToString()
+            })
+            .ToListAsync();
+
+        
+        _context.Samples.Update(sample);
+        await _context.SaveChangesAsync();
+
+
+        return Ok(null);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteSample(int id)
+    {
+        var sample = await _context.Samples.FindAsync(id);
+
+        if (sample == null) // on peut fqire aussi "is null"
+            return NotFound();
+
+        _context.Samples.Remove(sample);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+
+    // faire ceci rajoute a la route déjà existante (api/samples), ce qui donne : /api/samples/api/test
+    //     [Route("api/test")]
+    // faire cei fait la meme chose :
+    // [HttpPost("api/test")]
+    // ici : chmain absolut
+    [HttpPost("/api/test")]
+    public IActionResult test()
+    {
+        Console.WriteLine("gfsgfdsg test");
+        return Ok("test");
     }
 }
